@@ -15,8 +15,8 @@ def search_results():
     conn = sqlite3.connect('ALA.db')
     c = conn.cursor()
     c.execute('SELECT * FROM cards WHERE name=?;', [cardName,])
-    card = c.fetchall()
-    if card:
-        return 'You found %s!' % card[0][0]
+    cards = c.fetchall()
+    if cards:
+        return render_template('resultsPage.html', cards=cards)
     else:
         return 'Card not found!'
