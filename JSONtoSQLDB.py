@@ -18,25 +18,29 @@ c.execute('''CREATE TABLE cards (
              number INTEGER PRIMARY KEY,
              cmc INTEGER,
              text TEXT,
-             type TEXT)''')
+             type TEXT,
+             colors TEXT)''')
 
-insertables = ['name', 'number', 'cmc', 'text', 'type']
+# insertables = ['name', 'number', 'cmc', 'text', 'type']
 
 # for loop to print out individual cards
 for item in alara['cards']:
     print item['name']
 
     cmc = 0
-    text = ' '
+    text = colors = ''
     name = item['name']
     number = item['number']
     if 'cmc' in item:
         cmc = item['cmc']
     if 'text' in item:
         text = item['text']
+    if 'colors' in item:
+        for color in item['colors']:
+            colors = colors + color + ' '
     cardtype = item['type']
-    insert = (number, name, text, cardtype, cmc)
-    c.execute('''INSERT INTO cards (number, name, text, type, cmc) VALUES(?, ?, ?, ?, ?);''', insert)
+    insert = (number, name, text, cardtype, cmc, colors)
+    c.execute('''INSERT INTO cards (number, name, text, type, cmc, colors) VALUES(?, ?, ?, ?, ?, ?);''', insert)
 
 conn.commit()
 conn.close()

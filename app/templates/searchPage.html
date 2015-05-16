@@ -8,18 +8,28 @@
     <h1>Magic the Gathering - Alara Database</h1>
     <h2>Choose a card to find!</h2>
 
-    <form action="{{ url_for('search_results') }}" name="cardName" method="post" class="add-entry">
-        <p>
-            Search:
-            <input type="text" name="CardName">
-            <input type="submit" value="Search">
+    <form action="{{ url_for('search_results') }}" name="cardName" method="post" class="add-entry", id="searchform">
+        <p>Name: <input type="text" name="CardName"></p>
+        <p>Type: <input type="text" name="CardType"></p>
+        <p>Color:
+            <select name="CardColor" form="searchform">
+                <option value="Black">Black</option>
+                <option value="Blue">Blue</option>
+                <option value="White">White</option>
+                <option value="Red">Red</option>
+                <option value="Green">Green</option>
+            </select>
         </p>
-        <br>
-        <h2>Card List:</h2>
-        {% for name in nameList %}
-            <a href={{ url_for('card_page', card_name=name) }}>{{ name }}</a><br>
-        {% endfor %}
 
+        <input type="submit" value="Search">
+        <br>
     </form>
+
+    <hr>
+    <h2>Card List:</h2>
+    {% for name in nameList %}
+        <a href={{ url_for('card_page', card_name=name) }}>{{ name }}</a><br>
+    {% endfor %}
+
 </body>
 </html>
