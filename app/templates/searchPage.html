@@ -5,14 +5,21 @@
     <title></title>
 </head>
 <body>
-    <h1>Choose a card to find!</h1>
+    <h1>Magic the Gathering - Alara Database</h1>
+    <h2>Choose a card to find!</h2>
 
     <form action="{{ url_for('search_results') }}" name="cardName" method="post" class="add-entry">
-      <p>
-        Search:
-        <input type="text" name="CardName">
-        <input type="submit" value="Search">
-      </p>
+        <p>
+            Search:
+            <input type="text" name="CardName">
+            <input type="submit" value="Search">
+        </p>
+        <br>
+        <h2>Card List:</h2>
+        {% for name in nameList %}
+            <a href={{ url_for('card_page', card_name=name) }}>{{ name }}</a><br>
+        {% endfor %}
+
     </form>
 </body>
 </html>
