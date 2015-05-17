@@ -14,33 +14,43 @@ alara = json.load(alaraFile)
 
 c.execute('''DROP TABLE IF EXISTS cards;''')
 c.execute('''CREATE TABLE cards (
-             name TEXT,
-             number INTEGER PRIMARY KEY,
-             cmc INTEGER,
-             text TEXT,
              type TEXT,
-             colors TEXT)''')
+             colors TEXT,
+             name TEXT,
+             cmc INTEGER,
+             rarity TEXT,
+             manaCost TEXT,
+             text TEXT,
+             number INTEGER PRIMARY KEY,
+             imageName TEXT);''')
 
-# insertables = ['name', 'number', 'cmc', 'text', 'type']
+# insertables = ['type', 'colors', 'name', 'cmc', 'rarity', 'manaCost', 'text', 'number', 'imageName']
 
 # for loop to print out individual cards
 for item in alara['cards']:
     print item['name']
-
     cmc = 0
-    text = colors = ''
-    name = item['name']
-    number = item['number']
-    if 'cmc' in item:
-        cmc = item['cmc']
-    if 'text' in item:
-        text = item['text']
+    text = colors = manaCost = ''
+
+    cardtype = item['type']
     if 'colors' in item:
         for color in item['colors']:
             colors = colors + color + ' '
-    cardtype = item['type']
-    insert = (number, name, text, cardtype, cmc, colors)
-    c.execute('''INSERT INTO cards (number, name, text, type, cmc, colors) VALUES(?, ?, ?, ?, ?, ?);''', insert)
+    name = item['name']
+    if 'cmc' in item:
+        cmc = item['cmc']
+    rarity = item['rarity']
+    if 'manaCost' in item:
+        manaCost = item['manaCost']
+    if 'text' in item:
+        text = item['text']
+    number = item['number']
+    imageName = item['imageName']
+
+# insertables = ['type', 'colors', 'name', 'cmc', 'rarity', 'manaCost', 'text', 'number', 'imageName']
+    insert = (cardtype, colors, name, cmc, rarity, manaCost, text, number, imageName)
+    c.execute('''INSERT INTO cards (type, colors, name, cmc, rarity, manaCost, text, number, imageName)
+                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);''', insert)
 
 conn.commit()
 conn.close()

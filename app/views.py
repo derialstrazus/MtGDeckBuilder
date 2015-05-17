@@ -12,7 +12,7 @@ def hello_world():
     cardList = c.fetchall()
     nameList = []
     for card in cardList:
-        nameList.append(card[0])
+        nameList.append(card[2])
     conn.close()
     return render_template('searchPage.html', nameList=nameList)
 
@@ -46,3 +46,11 @@ def card_page(card_name):
         return render_template('resultsPage.html', cards=cards)
     else:
         return 'Card not found!'
+
+@app.route('/deckbuilder')
+def deckbuilder():
+    return 'Build a deck!'
+
+@app.route('/addtodeck')
+def addtodeck():
+    return 'Adding to deck?'

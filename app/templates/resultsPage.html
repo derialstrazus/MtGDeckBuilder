@@ -5,12 +5,47 @@
     <title></title>
 </head>
 <body>
+<!--body bgcolor="#34495e"-->
+    <div>
+        <h2>New Search:</h2>
+        <form action="{{ url_for('search_results') }}" name="cardName" method="post" class="add-entry", id="searchform">
+            <p>Name: <input type="text" name="CardName"></p>
+            <p>Type: <input type="text" name="CardType"></p>
+            <p>Color:
+                <select name="CardColor" form="searchform">
+                    <option value=""> </option>
+                    <option value="Black">Black</option>
+                    <option value="Blue">Blue</option>
+                    <option value="White">White</option>
+                    <option value="Red">Red</option>
+                    <option value="Green">Green</option>
+                </select>
+            </p>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+
+    <p>-----------------------------------------------------------------------------------</p>
+
+    <table cellpadding="10">
     {% for item in cards %}
-        <h1>{{ item[0] }}</h1>
-        <p>Converted Mana Cost:{{ item[2] }}</p>
-        <p>Text: {{ item[3] }}</p>
-        <p>Type: {{ item[4] }}</p>
-        <p>Color: {{ item[5] }}</p>
+        <tr>
+            <td>
+                <img src="{{ url_for('static', filename='ALA/'+item[-1]+'.full.jpg') }}" height="400">
+            </td>
+            <td width="500">
+            <!--td bgcolor="#bdc3c7", width="500"-->
+                <h1>{{ item[2] }}</h1>
+                <p>Color: {{ item[1] }}</p>
+                <p>Mana Cost: {{ item[5] }}</p>
+                <p>CMC:{{ item[3] }}</p>
+                <p>Type: {{ item[0] }}</p>
+                <p>Rarity: {{ item[4] }}</p>
+                <p>Text: {{ item[6] }}</p>
+                <button type="button">Add</button>
+            </td>
+        </tr>
     {% endfor %}
+    </table>
 </body>
 </html>
